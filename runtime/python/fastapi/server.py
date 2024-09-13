@@ -71,6 +71,9 @@ async def inference_instruct(tts_text: str = Form(), spk_id: str = Form(), instr
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--host',
+                        type=str,
+                        default='0.0.0.0')
     parser.add_argument('--port',
                         type=int,
                         default=50000)
@@ -78,6 +81,7 @@ if __name__ == '__main__':
                         type=str,
                         default='iic/CosyVoice-300M',
                         help='local path or modelscope repo id')
+    
     args = parser.parse_args()
     cosyvoice = CosyVoice(args.model_dir)
-    uvicorn.run(app, host="127.0.0.1", port=args.port)
+    uvicorn.run(app, host=args.host, port=args.port)
